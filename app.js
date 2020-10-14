@@ -1,8 +1,14 @@
 const express = require('express');
 const { dirname } = require('path');
 const path = require('path')
+const accounts = require('./Acounts')
 
 const app = express();
+
+app.get('/api/accounts', (req, res) => {
+    // if we want to return JSON file
+    res.send(accounts)
+})
 
 // Setting a static folder
 
