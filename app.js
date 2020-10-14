@@ -1,23 +1,21 @@
 const express = require('express');
-const { dirname } = require('path');
 const path = require('path')
 const accounts = require('./Acounts')
+const logger = require('./middleware/loggger')
 
 const app = express();
+
+
+// Init middleware
+app.use(logger)
 
 app.get('/api/accounts', (req, res) => {
     // if we want to return JSON file
     res.send(accounts)
 })
 
-// Setting a static folder
 
-// app.use use is a method we use when we want to include a middleware
-
-// This is setting our public folder as the static folder
-
-// The reason we do this is that we do create many res.sendFile()
-
+// The static website
 app.use(express.static(path.join(__dirname, "public")))
 
 const PORT = process.env.PORT || 5000
