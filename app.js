@@ -4,11 +4,15 @@ const path = require('path')
 
 const app = express();
 
-app.get('/', function(req, res){
-    // Sending a file
-    res.sendFile(path.join(__dirname, 'public', 'files','index.html'))
+// Setting a static folder
 
-})
+// app.use use is a method we use when we want to include a middleware
+
+// This is setting our public folder as the static folder
+
+// The reason we do this is that we do create many res.sendFile()
+
+app.use(express.static(path.join(__dirname, "public")))
 
 const PORT = process.env.PORT || 5000
 
