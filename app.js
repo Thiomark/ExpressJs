@@ -1,9 +1,13 @@
 const express = require('express');
+const { dirname } = require('path');
+const path = require('path')
 
 const app = express();
 
 app.get('/', function(req, res){
-    res.send("Hello World")
+    // Sending a file
+    res.sendFile(path.join(__dirname, 'public', 'files','index.html'))
+
 })
 
 const PORT = process.env.PORT || 5000
