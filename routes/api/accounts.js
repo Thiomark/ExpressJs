@@ -30,6 +30,7 @@ router.get('/:id', (req, res) => {
     }
 })
 
+// creating an account
 router.post('/', (req, res) => {
     // res.send(req.body)
     const newAccount = {
@@ -45,6 +46,46 @@ router.post('/', (req, res) => {
 
     accounts.push(newAccount)
     res.json(accounts);
+})
+
+// updating an account
+router.put('/:id', (req, res) => {
+    // Checking if that accounts exist or not
+    const found = accounts.some(function(person){
+        return person.id === parseInt(req.params.id)
+    })
+
+    if(found){
+        const updateAccount = req.body
+        for(let account of accounts){
+            if(account.id === parseInt(req.params.id)){
+                account.name = updateAccount.name ? updateAccount.name : account.name;
+                account.email = updateAccount.email ? updateAccount.email : account.email;
+
+                res.status(400).json({message: "Account has been updated", account});
+            }
+        }
+    }
+    else {
+        return res.status(400).json({message: "Account does not exist"});
+    }
+})
+
+//Deleting an account
+router.delete('/:id', (req, res) => {
+    const found = accounts.some(function(person){
+        return person.id === parseInt(req.params.id)
+    })
+
+    if(found){
+        res.json({
+            message: "Account has been deleted, remain accounts", 
+            accounts: accounts.filter(account => account.id !== parseInt(req.params.id))
+        })
+    }
+    else {
+        return res.status(400).json({message: "Account does not exist"});
+    }
 })
 
 module.exports = router
