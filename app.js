@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path')
 const logger = require('./middleware/loggger')
+const exphbs = require('express-handlebars')
+const acounts = require('./Acounts');
 
 const app = express();
 
@@ -9,7 +11,16 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // Init middleware
-app.use(logger)
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+// Homepage Route
+app.get('/', (req, res) =>
+  res.render('index', {
+    title: 'Accounts App',
+    acounts
+  })
+);
 
 // The static website
 app.use(express.static(path.join(__dirname, "public")))

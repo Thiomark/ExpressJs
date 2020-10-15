@@ -45,7 +45,8 @@ router.post('/', (req, res) => {
     }
 
     accounts.push(newAccount)
-    res.json(accounts);
+    res.redirect('/')
+    //res.json(accounts);
 })
 
 // updating an account
